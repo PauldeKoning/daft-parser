@@ -1,11 +1,12 @@
 import {jest} from '@jest/globals'
 
 import {getListingsFromArea} from "../../src/parser/listing.parser";
-import fetch from "node-fetch-commonjs";
-// @ts-ignore
-const {Response} = jest.requireActual('node-fetch-commonjs');
 
-jest.mock('node-fetch-commonjs');
+import {getLatestRentalResults} from "../../src/result.fetcher";
+import {parse} from "node-html-parser";
+import {ListingType} from "../../src/model/listing";
+
+jest.mock("../../src/result.fetcher");
 
 const htmlMultiple = "<ul>" +
     "<li data-testid='result-3424'>" +
@@ -24,11 +25,20 @@ const htmlOneDoesntHaveAddress = "<ul>" +
     "</li>" +
     "</ul>";
 
-describe('Test listings', () => {
-    it('Get two correct listings from website', async () => {
+const htmlOneDoesntProperId = "<ul>" +
+    "<li>" +
+    "</li>" +
+    "</ul>";
 
-        const response = new Response(htmlMultiple);
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(response);
+describe('Test listings', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('Get two correct listings from website', async () => {
+        const parsedHtml = parse(htmlMultiple);
+        const response = parsedHtml.querySelectorAll('li[data-testid^="result-"]');
+        (getLatestRentalResults as jest.MockedFunction<typeof getLatestRentalResults>).mockResolvedValue(response);
 
         const test = await getListingsFromArea("dublin-city");
 
@@ -53,9 +63,9 @@ describe('Test listings', () => {
     });
 
     it('Get one listing without address', async () => {
-
-        const response = new Response(htmlOneDoesntHaveAddress);
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(response);
+        const parsedHtml = parse(htmlOneDoesntHaveAddress);
+        const response = parsedHtml.querySelectorAll('li[data-testid^="result-"]');
+        (getLatestRentalResults as jest.MockedFunction<typeof getLatestRentalResults>).mockResolvedValue(response);
 
         const test = await getListingsFromArea("dublin-city");
 
@@ -67,6 +77,24 @@ describe('Test listings', () => {
                 "location": undefined,
                 "price": 2500,
                 "type": "Apartment"
+            }
+        ]);
+    });
+
+    it('Get one listing without id number', async () => {
+        const parsedHtml = parse(htmlOneDoesntProperId);
+        (getLatestRentalResults as jest.MockedFunction<typeof getLatestRentalResults>).mockResolvedValue([parsedHtml]);
+
+        const test = await getListingsFromArea("dublin-city");
+
+        expect(test).toStrictEqual([
+            {
+                id: null,
+                bathrooms: 1,
+                bedrooms: 1,
+                location: undefined,
+                price: null,
+                type: ListingType.apartment
             }
         ]);
     });
