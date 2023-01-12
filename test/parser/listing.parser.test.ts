@@ -34,15 +34,17 @@ describe('Test listings', () => {
 
         expect(test).toStrictEqual([
             {
-                "bathrooms": null,
-                "bedrooms": null,
+                "id": 3424,
+                "bathrooms": 1,
+                "bedrooms": 1,
                 "location": "Dublin 6W",
                 "price": 2500,
                 "type": "Apartment"
             },
             {
-                "bathrooms": null,
-                "bedrooms": null,
+                "id": 3425,
+                "bathrooms": 1,
+                "bedrooms": 1,
                 "location": "Dublin 8",
                 "price": 2500,
                 "type": "Apartment"
@@ -59,8 +61,9 @@ describe('Test listings', () => {
 
         expect(test).toStrictEqual([
             {
-                "bathrooms": null,
-                "bedrooms": null,
+                "id": 3424,
+                "bathrooms": 1,
+                "bedrooms": 1,
                 "location": undefined,
                 "price": 2500,
                 "type": "Apartment"

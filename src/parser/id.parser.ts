@@ -3,5 +3,11 @@ export default function getIdFromString(idText: string | null): number | null {
         return null;
     }
 
-    return parseInt(idText.substring(7));
+    const match = idText.trim().match(/^result-([0-9]+)$/);
+
+    if (!match) {
+        return null;
+    }
+
+    return parseInt(match[1]);
 }

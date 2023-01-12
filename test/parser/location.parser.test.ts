@@ -26,6 +26,12 @@ describe('Get location correctly', () => {
 
         expect(location).toBe(ListingLocation.D06W);
     });
+
+    it('Should return Dublin (Other) from Co. Dublin', () => {
+        const location = getLocationFromString('Co. Dublin');
+
+        expect(location).toBe(ListingLocation.DRest);
+    });
 });
 
 describe('Get locations fails', () => {
@@ -43,6 +49,12 @@ describe('Get locations fails', () => {
 
     it('Should return null when null is given', () => {
         const location = getLocationFromString(null);
+
+        expect(location).toBe(null);
+    });
+
+    it('Should return null when Co Dublin is given', () => {
+        const location = getLocationFromString('Co Dublin');
 
         expect(location).toBe(null);
     });
