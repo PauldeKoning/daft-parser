@@ -32,6 +32,6 @@ export const handler = async (event: {
         body: JSON.stringify({
             listings: await getListingsFromArea(event.area)
         }),
-        statusCode: 400,
+        statusCode: 200,
     }
 }
