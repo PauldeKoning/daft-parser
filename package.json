@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "test": "jest",
-    "build": "npx tsc",
+    "build": "tsc",
     "start": "npm run build && node --experimental-specifier-resolution=node dist/app.js",
     "test:coverage": "jest --coverage",
     "test:badges": "npm run test:coverage && jest-coverage-badges"
@@ -13,9 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/aws-lambda": "^8.10.109",
     "jest-coverage-badges": "^1.1.2",
     "node-fetch-commonjs": "^3.2.4",
-    "node-html-parser": "^6.1.4"
+    "node-html-parser": "^6.1.4",
+    "run-func": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.2.5",

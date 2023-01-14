@@ -1,22 +1,37 @@
-import {Listing} from "./model/listing";
 import {getListingsFromArea} from "./parser/listing.parser";
+import {APIGatewayProxyResult} from "aws-lambda";
 
-(async () => {
-    const listings: Listing[] = await getListingsFromArea('dublin-city');
+export const handler = async (event: {
+    area: string
+}): Promise<APIGatewayProxyResult> => {
+    console.log('test mens');
 
-    console.log(listings);
+    console.log(event);
 
-    const listingsWithPrice = listings.filter(listing => listing.price !== null);
+    if (!event.area) {
+        return {
+            body: JSON.stringify({
+                msg: "Area is not defined",
+            }),
+            statusCode: 400,
+        }
+    }
 
-    const totalPrice = getTotalListingPrice(listingsWithPrice);
-    const averagePrice = totalPrice / listingsWithPrice.length;
+    const allowedAreas = ['dublin-city'];
 
-    console.log(listingsWithPrice);
-    console.log(averagePrice);
-})();
+    if (!allowedAreas.includes(event.area)) {
+        return {
+            body: JSON.stringify({
+                msg: "Area is not allowed",
+            }),
+            statusCode: 400,
+        }
+    }
 
-function getTotalListingPrice(listings: Listing[]): number {
-    let totalPrice = 0;
-    listings.forEach(listing => totalPrice += listing.price || 0);
-    return totalPrice;
+    return {
+        body: JSON.stringify({
+            listings: await getListingsFromArea(event.area)
+        }),
+        statusCode: 400,
+    }
 }
