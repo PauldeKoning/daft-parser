@@ -1,3 +1,13 @@
 export default function getBathroomsFromString(bathroomText: string | null): number | null {
-    return 1;
+    if (!bathroomText) {
+        return null;
+    }
+
+    const match = bathroomText.trim().match(/^([0-9]+) bath$/i);
+
+    if (!match) {
+        return null;
+    }
+
+    return parseInt(match[1]);
 }

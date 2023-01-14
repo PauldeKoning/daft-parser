@@ -13,11 +13,13 @@ const htmlMultiple = "<ul>" +
     "<div data-testid='price'>€2,500 per month</div>" +
     "<p data-testid='address'>Dublin 6W</p>" +
     "<p data-testid='beds'>8 Bed</p>" +
+    "<p data-testid='baths'>4 Bath</p>" +
     "</li>" +
     "<li data-testid='result-3425'>" +
     "<div data-testid='price'>€2,500 per month</div>" +
     "<p data-testid='address'>Dublin 8</p>" +
     "<p data-testid='beds'>7 Bed</p>" +
+    "<p data-testid='baths'>3 Bath</p>" +
     "</li>" +
     "</ul>";
 
@@ -25,6 +27,7 @@ const htmlOneDoesntHaveAddress = "<ul>" +
     "<li data-testid='result-3424'>" +
     "<div data-testid='price'>€2,500 per month</div>" +
     "<p data-testid='beds'>7 Bed</p>" +
+    "<p data-testid='baths'>3 Bath</p>" +
     "</li>" +
     "</ul>";
 
@@ -48,7 +51,7 @@ describe('Test listings', () => {
         expect(test).toStrictEqual([
             {
                 "id": 3424,
-                "bathrooms": 1,
+                "bathrooms": 4,
                 "bedrooms": 8,
                 "location": "Dublin 6W",
                 "price": 2500,
@@ -56,7 +59,7 @@ describe('Test listings', () => {
             },
             {
                 "id": 3425,
-                "bathrooms": 1,
+                "bathrooms": 3,
                 "bedrooms": 7,
                 "location": "Dublin 8",
                 "price": 2500,
@@ -75,7 +78,7 @@ describe('Test listings', () => {
         expect(test).toStrictEqual([
             {
                 "id": 3424,
-                "bathrooms": 1,
+                "bathrooms": 3,
                 "bedrooms": 7,
                 "location": undefined,
                 "price": 2500,
@@ -93,7 +96,7 @@ describe('Test listings', () => {
         expect(test).toStrictEqual([
             {
                 id: null,
-                bathrooms: 1,
+                bathrooms: null,
                 bedrooms: null,
                 location: undefined,
                 price: null,
