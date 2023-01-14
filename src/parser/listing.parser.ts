@@ -33,7 +33,7 @@ function mapResultToListing(result: HTMLElement): Listing {
         bathrooms: getBathroomsFromString(bathroomText),
         bedrooms: getBedroomsFromString(bedroomText),
         type: getListingTypeFromString(propertyTypeText),
-        location: getLocationFromString(locationText) || undefined,
+        location: getLocationFromString(locationText),
         price: getPriceNumberFromString(priceText)
     }
 }

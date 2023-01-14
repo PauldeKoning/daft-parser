@@ -4,7 +4,6 @@ import {getListingsFromArea} from "../../src/parser/listing.parser";
 
 import {getLatestRentalResults} from "../../src/result.fetcher";
 import {parse} from "node-html-parser";
-import {ListingType} from "../../src/model/listing";
 
 jest.mock("../../src/result.fetcher");
 
@@ -14,12 +13,14 @@ const htmlMultiple = "<ul>" +
     "<p data-testid='address'>Dublin 6W</p>" +
     "<p data-testid='beds'>8 Bed</p>" +
     "<p data-testid='baths'>4 Bath</p>" +
+    "<p data-testid='property-type'>Studio</p>" +
     "</li>" +
     "<li data-testid='result-3425'>" +
     "<div data-testid='price'>€2,500 per month</div>" +
     "<p data-testid='address'>Dublin 8</p>" +
     "<p data-testid='beds'>7 Bed</p>" +
     "<p data-testid='baths'>3 Bath</p>" +
+    "<p data-testid='property-type'>House</p>" +
     "</li>" +
     "</ul>";
 
@@ -28,6 +29,7 @@ const htmlOneDoesntHaveAddress = "<ul>" +
     "<div data-testid='price'>€2,500 per month</div>" +
     "<p data-testid='beds'>7 Bed</p>" +
     "<p data-testid='baths'>3 Bath</p>" +
+    "<p data-testid='property-type'>Apartment</p>" +
     "</li>" +
     "</ul>";
 
@@ -55,7 +57,7 @@ describe('Test listings', () => {
                 "bedrooms": 8,
                 "location": "Dublin 6W",
                 "price": 2500,
-                "type": "Apartment"
+                "type": "Studio"
             },
             {
                 "id": 3425,
@@ -63,7 +65,7 @@ describe('Test listings', () => {
                 "bedrooms": 7,
                 "location": "Dublin 8",
                 "price": 2500,
-                "type": "Apartment"
+                "type": "House"
             }
         ]);
     });
@@ -80,7 +82,7 @@ describe('Test listings', () => {
                 "id": 3424,
                 "bathrooms": 3,
                 "bedrooms": 7,
-                "location": undefined,
+                "location": null,
                 "price": 2500,
                 "type": "Apartment"
             }
@@ -98,9 +100,9 @@ describe('Test listings', () => {
                 id: null,
                 bathrooms: null,
                 bedrooms: null,
-                location: undefined,
+                location: null,
                 price: null,
-                type: ListingType.apartment
+                type: null
             }
         ]);
     });
