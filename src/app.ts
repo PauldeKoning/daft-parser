@@ -1,37 +1,18 @@
+import { Listing } from "./model/listing";
 import {getListingsFromArea} from "./parser/listing.parser";
-import {APIGatewayProxyResult} from "aws-lambda";
 
-export const handler = async (event: {
+export const getDaftListings = async (event: {
     area: string
-}): Promise<APIGatewayProxyResult> => {
-    console.log('test mens');
-
-    console.log(event);
-
+}): Promise<Listing[] | undefined> => {
     if (!event.area) {
-        return {
-            body: JSON.stringify({
-                msg: "Area is not defined",
-            }),
-            statusCode: 400,
-        }
+        return;
     }
 
     const allowedAreas = ['dublin-city'];
 
     if (!allowedAreas.includes(event.area)) {
-        return {
-            body: JSON.stringify({
-                msg: "Area is not allowed",
-            }),
-            statusCode: 400,
-        }
+        return;
     }
 
-    return {
-        body: JSON.stringify({
-            listings: await getListingsFromArea(event.area)
-        }),
-        statusCode: 200,
-    }
+    return await getListingsFromArea(event.area);
 }
