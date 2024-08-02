@@ -9,27 +9,39 @@ jest.mock("../../src/result.fetcher");
 
 const htmlMultiple = "<ul>" +
     "<li data-testid='result-3424'>" +
-    "<div data-testid='price'>€2,500 per month</div>" +
-    "<p data-testid='address'>Dublin 6W</p>" +
-    "<p data-testid='beds'>8 Bed</p>" +
-    "<p data-testid='baths'>4 Bath</p>" +
-    "<p data-testid='property-type'>Studio</p>" +
+    "<div data-tracking='srp_price'>€2,500 per month</div>" +
+    "<div data-tracking='srp_address'>Dublin 6W</div>" +
+    "<div data-tracking='srp_meta'>" +
+    "<div><div>" +
+    "<span>8 Bed</span>" +
+    "<span>4 Bath</span>" +
+    "<span>Apartment</span>" +
+    "</div></div>" +
+    "</div>" +
     "</li>" +
     "<li data-testid='result-3425'>" +
-    "<div data-testid='price'>€2,500 per month</div>" +
-    "<p data-testid='address'>Dublin 8</p>" +
-    "<p data-testid='beds'>7 Bed</p>" +
-    "<p data-testid='baths'>3 Bath</p>" +
-    "<p data-testid='property-type'>House</p>" +
+    "<div data-tracking='srp_price'>€2,500 per month</div>" +
+    "<div data-tracking='srp_address'>Dublin 8</div>" +
+    "<div data-tracking='srp_meta'>" +
+    "<div><div>" +
+    "<span>7 Bed</span>" +
+    "<span>3 Bath</span>" +
+    "<span>House</span>" +
+    "</div></div>" +
+    "</div>" +
     "</li>" +
     "</ul>";
 
 const htmlOneDoesntHaveAddress = "<ul>" +
     "<li data-testid='result-3424'>" +
-    "<div data-testid='price'>€2,500 per month</div>" +
-    "<p data-testid='beds'>7 Bed</p>" +
-    "<p data-testid='baths'>3 Bath</p>" +
-    "<p data-testid='property-type'>Apartment</p>" +
+    "<div data-tracking='srp_price'>€2,500 per month</div>" +
+    "<div data-tracking='srp_meta'>" +
+    "<div><div>" +
+    "<span>7 Bed</span>" +
+    "<span>3 Bath</span>" +
+    "<span>Apartment</span>" +
+    "</div></div>" +
+    "</div>" +
     "</li>" +
     "</ul>";
 
@@ -57,7 +69,7 @@ describe('Test listings', () => {
                 "bedrooms": 8,
                 "location": "Dublin 6W",
                 "price": 2500,
-                "type": "Studio"
+                "type": "Apartment"
             },
             {
                 "id": 3425,
@@ -82,7 +94,7 @@ describe('Test listings', () => {
                 "id": 3424,
                 "bathrooms": 3,
                 "bedrooms": 7,
-                "location": null,
+                "location": undefined,
                 "price": 2500,
                 "type": "Apartment"
             }
@@ -100,7 +112,7 @@ describe('Test listings', () => {
                 id: null,
                 bathrooms: null,
                 bedrooms: null,
-                location: null,
+                location: undefined,
                 price: null,
                 type: null
             }

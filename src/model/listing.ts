@@ -1,10 +1,10 @@
 export interface Listing {
     id: number | null;
     price: number | null;
-    bedrooms: number | null;
-    bathrooms: number | null;
+    bedrooms?: number | null;
+    bathrooms?: number | null;
     type: ListingType | null;
-    location: ListingLocation | null;
+    location?: ListingLocation | null;
 }
 
 export enum ListingType {
